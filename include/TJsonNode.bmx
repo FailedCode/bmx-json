@@ -150,18 +150,6 @@ Type TJsonNode Extends TMap
 		_parseValue(tok, key)
 	EndMethod
 	
-	Method strJoin:String(bits:String[], sep:String)
-		Local r:String
-		For Local bit:String = EachIn bits
-			If r
-				r:+sep + bit
-			Else
-				r = bit
-			End If
-		Next
-		Return r
-	End Method
-	
 	'get value from path
 	Method xPath:String(path:String)
 		'DebugLog "path: " + path
@@ -172,7 +160,7 @@ Type TJsonNode Extends TMap
 			If String(ValueForKey(valNames[0]))
 				Return String(ValueForKey(valNames[0]))
 			ElseIf TJsonNode(ValueForKey(valNames[0]))
-				Return TJsonNode(ValueForKey(valNames[0])).xPath(strJoin(valNames[1..], "/"))
+				Return TJsonNode(ValueForKey(valNames[0])).xPath( "/".join(valNames[1..]) )
 			ElseIf Not ValueForKey(valNames[0]) ' Null
 				Return "null"
 			Else
